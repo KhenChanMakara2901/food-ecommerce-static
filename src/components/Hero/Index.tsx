@@ -52,7 +52,7 @@ export default function Index() {
       }}
     >
       <div className="grid max-w-screen-2xl px-8 py-16 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-        <div className="mr-auto place-self-center lg:col-span-7">
+        <div className="mr-auto place-self-center lg:col-span-7 max-w-2xl">
           <h1 className="mb-4  text-5xl font-serif tracking-tight leading-none md:text-6xl xl:text-7xl dark:text-white">
             ភោជនីយដ្ឋាន
             <span className="text-red-700">ស្រុកយេីងសាច់អាំងBBQ</span>
@@ -121,8 +121,6 @@ export default function Index() {
           </Swiper>
         </div>
       </div>
-
-      {/* Booking Pop-up Form */}
       {isBookingFormVisible && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-8 max-w-md w-full">
@@ -138,7 +136,7 @@ export default function Index() {
                 <input
                   type="text"
                   id="name"
-                  name="name" // Make sure this name matches
+                  name="name"
                   className="mt-1 p-2 w-full border border-gray-300 rounded-md"
                   required
                 />
@@ -153,7 +151,7 @@ export default function Index() {
                 <input
                   type="tel"
                   id="phone"
-                  name="phone" // Make sure this name matches
+                  name="phone"
                   className="mt-1 p-2 w-full border border-gray-300 rounded-md"
                   required
                 />
@@ -168,7 +166,7 @@ export default function Index() {
                 <input
                   type="date"
                   id="date"
-                  name="date" // Make sure this name matches
+                  name="date"
                   className="mt-1 p-2 w-full border border-gray-300 rounded-md"
                   required
                 />

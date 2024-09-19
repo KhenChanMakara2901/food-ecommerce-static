@@ -1,18 +1,34 @@
 "use client";
+"use client";
 import React, { useState } from "react";
 import { data } from "./Data/data.js";
+
+interface Item {
+  name: string;
+  price: string;
+  image: string;
+  rating: number;
+  category: string;
+}
+interface Order {
+  foodName: string;
+  name: string;
+  address: string;
+  quantity: number;
+}
 
 export default function ListOrder() {
   const [food, setFoods] = useState(data);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [orderHistory, setOrderHistory] = useState([]);
-  const filterType = (category) => {
+  const [selectedItem, setSelectedItem] = useState<Item | null>(null); // Allow null
+  const [orderHistory, setOrderHistory] = useState<Order[]>([]);
+
+  const filterType = (category: string) => {
     setFoods(data.filter((item) => item.category === category));
   };
 
-  const openForm = (item) => {
+  const openForm = (item: Item) => {
     setSelectedItem(item);
     setIsFormOpen(true);
   };
@@ -21,35 +37,36 @@ export default function ListOrder() {
     setIsFormOpen(false);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const order = {
-      foodName: selectedItem.name,
-      name: formData.get("name"),
-      address: formData.get("address"),
-      quantity: formData.get("quantity"),
-    };
-    const response = await fetch("/api/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(order),
-    });
+    const formData = new FormData(e.target as HTMLFormElement);
+    if (selectedItem) {
+      const order = {
+        foodName: selectedItem.name,
+        name: formData.get("name"),
+        address: formData.get("address"),
+        quantity: formData.get("quantity"),
+      };
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(order),
+      });
 
-    if (response.ok) {
-      const result = await response.json();
-      console.log("Order response:", result);
-      setOrderHistory([...orderHistory, result.order]);
-      setIsFormOpen(false);
-      setIsSuccessOpen(true);
+      if (response.ok) {
+        const result = await response.json();
+        setOrderHistory((prev) => [...prev, result.order]);
+        setIsFormOpen(false);
+        setIsSuccessOpen(true);
 
-      setTimeout(() => {
-        setIsSuccessOpen(false);
-      }, 4000);
-    } else {
-      console.error("Failed to place order");
+        setTimeout(() => {
+          setIsSuccessOpen(false);
+        }, 4000);
+      } else {
+        console.error("Failed to place order");
+      }
     }
   };
 
@@ -157,7 +174,7 @@ export default function ListOrder() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg w-full max-w-md">
             <h2 className="text-2xl font-bold mb-4">Order Form</h2>
-            <p className="mb-4">{`Ordering: ${selectedItem.name}`}</p>
+            <p className="mb-4">{`Ordering: ${selectedItem?.name}`}</p>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label

@@ -23,13 +23,15 @@ const Navbar = () => {
           navIsOpened ? "lg:hidden" : "hidden lg:hidden"
         }`}
       />
-      <header className="sticky left-0 top-0 w-full flex items-center h-20 border-b border-b-gray-100 dark:border-b-gray-900 z-40 bg-slate-100  bg-opacity-80 backdrop-filter backdrop-blur-xl">
+      <header className="sticky left-0 top-0 w-full flex items-center h-20 z-40 bg-fixed bg-cover bg-center backdrop-filter backdrop-blur-xl">
         <nav className="relative mx-auto lg:max-w-7xl w-full px-5 sm:px-10 md:px-12 lg:px-5 flex gap-x-5 justify-between items-center">
           <div className="flex items-center min-w-max mr-10">
             <Image
               src={BurgerLogo}
               alt="BurgerLogo-Icon"
-              width={75}
+              width={60}
+              height={60}
+              quality={100}
               className="border border-red-900 rounded-3xl"
             />
             <span className="text-red-700 text-2xl font-serif font-bold ml-2">
@@ -47,7 +49,7 @@ const Navbar = () => {
           }
         `}
           >
-            <ul className="flex flex-col font-extrabold text-xl lg:flex-row gap-6 lg:items-center text-gray-950 lg:w-full lg:justify-center">
+            <ul className="flex flex-col font-extrabold text-lg lg:flex-row gap-6 lg:items-center text-gray-950 lg:w-full lg:justify-center">
               <Link
                 href="#"
                 className="relative py-2.5 duration-300 ease-linear hover:text-red-700 after:absolute after:w-full after:left-0 after:bottom-0 after:h-px after:rounded-md after:origin-left after:ease-linear after:duration-300 after:scale-x-0 hover:after:scale-100 after:bg-gray-900"
